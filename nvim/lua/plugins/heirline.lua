@@ -1,4 +1,4 @@
-local config = function()
+local function config()
   local conditions = require("heirline.conditions")
   local utils = require("heirline.utils")
 
@@ -89,6 +89,11 @@ local config = function()
     init = function(self)
       self.filename = vim.api.nvim_buf_get_name(0)
     end,
+    hl = function()
+      return {
+        bg = "bg",
+      }
+    end,
   }
   -- We can now define some children separately and add them later
 
@@ -108,8 +113,6 @@ local config = function()
 
   local FileName = {
     provider = function(self)
-      -- first, trim the pattern relative to the current directory. For other
-      -- options, see :h filename-modifers
       local filename = vim.fn.fnamemodify(self.filename, ":.")
       if filename == "" then
         return "[No Name]"
@@ -497,18 +500,9 @@ local config = function()
     tabline = {
       BufferLine,
     },
-    statuscolumn = {
-      { provider = "%l %s" },
-    },
-
-    opts = {
-      disable_winbar_cb = function(args)
-        return conditions.buffer_matches({
-          buftype = { "nofile", "prompt", "help", "quickfix", "nvimtree" },
-          filetype = { "^git.*", "fugitive", "Trouble", "dashboard" },
-        }, args.buf)
-      end,
-    },
+    -- statuscolumn = {
+    --   { provider = "%s" },
+    -- },
   }
 end
 
@@ -516,6 +510,7 @@ return {
   "rebelot/heirline.nvim",
   version = "*",
   config = function()
-    require("heirline").setup(config())
+    local heirline = require("heirline")
+    heirline.setup(config())
   end,
 }

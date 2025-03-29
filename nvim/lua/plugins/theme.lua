@@ -2,25 +2,35 @@ return {
   {
     "folke/tokyonight.nvim",
     version = "*",
-    lazy = true,
-    -- config = function()
-    --   vim.cmd.colorscheme("tokyonight-moon")
-    -- end,
-  },
-  {
-    "rose-pine/neovim",
-    version = "*",
-    name = "rose-pine",
     lazy = false,
-    priority = 1000,
     config = function()
-      vim.cmd.colorscheme("rose-pine-dawn")
+      local tokyonight = require("tokyonight")
+      tokyonight.setup({
+        style = "day",
+        on_highlights = function(hl, _)
+          hl.TabLineFill = {
+            bg = "#E4E4E4",
+          }
+          hl.TabLineSel = {
+            fg = "#2e7de9",
+            bg = "#a8aecb",
+          }
+          hl.TabLine = {
+            fg = "#6172b0",
+            bg = "#d0d5e3",
+          }
+          hl.GitSignsAdd = {
+            fg = "green",
+          }
+          hl.GitSignsChange = {
+            fg = "orange",
+          }
+          hl.GitSignsDelete = {
+            fg = "red",
+          }
+        end,
+      })
+      tokyonight.load()
     end,
-  },
-  {
-    "catppuccin/nvim",
-    version = "*",
-    name = "catppuccin",
-    lazy = true,
   },
 }

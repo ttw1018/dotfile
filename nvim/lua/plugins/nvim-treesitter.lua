@@ -1,10 +1,9 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   version = "*",
-  event = "InsertEnter",
+  event = "BufRead",
   config = function()
     require("nvim-treesitter.configs").setup({
-      ensure_installed = { "c", "cpp", "lua", "latex", "bash" },
       auto_install = true,
       sync_install = true,
       highlight = {

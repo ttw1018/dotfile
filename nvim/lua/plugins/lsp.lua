@@ -1,19 +1,7 @@
 return {
   "neovim/nvim-lspconfig",
-  -- event = "InsertEnter",
+  event = "BufRead",
   version = "*",
-  ft = {
-    "tex",
-    "python",
-    "lua",
-    "cpp",
-    "c",
-    "go",
-    "vue",
-    "ts",
-    "js",
-  },
-  dependencies = { "williamboman/mason.nvim" },
   opts = {
     on_attach = function()
       local map = vim.keymap.set
@@ -25,15 +13,15 @@ return {
 
       map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
       map("n", "<leader>rn", vim.lsp.buf.rename, opts)
-      map("n", "<leader>fm", vim.lsp.buf.format, opts)
       map("n", "<leader>k", vim.lsp.buf.hover, opts)
       map("n", "<leader>d", vim.diagnostic.open_float, opts)
+      -- map("n", "<leader>fm", vim.lsp.buf.format, opts)
 
-      -- local ft = vim.bo.filetype
-      -- if ft == "tex" then
-      --   map("n", "<leader>ll", "<cmd>TexlabBuild<cr>")
-      --   map("n", "<leader>jj", "<cmd>TexlabForward<cr>")
-      -- end
+      local ft = vim.bo.filetype
+      if ft == "tex" then
+        --   map("n", "<leader>ll", "<cmd>TexlabBuild<cr>")
+        map("n", "<leader>jj", "<cmd>TexlabForward<cr>")
+      end
     end,
 
     servers = {
@@ -93,13 +81,6 @@ return {
           },
         },
       },
-      -- ltex = {
-      --   settings = {
-      --     ltex = {
-      --       language = "zh-CN",
-      --     },
-      --   },
-      -- },
       pyright = {},
       clangd = {},
       volar = {},

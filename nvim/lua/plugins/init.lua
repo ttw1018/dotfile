@@ -3,26 +3,15 @@ return {
     "hadronized/hop.nvim",
     version = "*",
     keys = {
-      { "F", "<cmd>HopChar1<cr>" },
+      { "F", mode = { "n", "x", "o" }, "<cmd>HopChar1<cr>" },
     },
     config = function()
       require("hop").setup()
     end,
   },
   {
-    "nvim-tree/nvim-web-devicons",
-    version = "*",
-    lazy = true,
-    config = function()
-      require("nvim-web-devicons").setup()
-    end,
-  },
-  {
     "nvim-tree/nvim-tree.lua",
     version = "*",
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
     keys = {
       { "<leader>e", "<cmd>NvimTreeToggle<cr>" },
     },
@@ -30,11 +19,13 @@ return {
       require("nvim-tree").setup()
     end,
   },
-
+  {
+    "nvim-tree/nvim-web-devicons",
+    lazy = false,
+  },
   {
     "ibhagwan/fzf-lua",
     version = "*",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
       { "<leader>ff", "<cmd>FzfLua files<cr>" },
       { "<leader>lg", "<cmd>FzfLua live_grep<cr>" },
@@ -72,7 +63,11 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     version = "*",
-    event = "VeryLazy",
+    event = "BufReadPre",
+    cond = function()
+      local git_dir = vim.fs.find(".git", { upward = true, type = "directory" })
+      return not vim.tbl_isempty(git_dir)
+    end,
     config = function()
       require("gitsigns").setup({
         signs = {
@@ -97,8 +92,7 @@ return {
   {
     "folke/snacks.nvim",
     version = "*",
-    priority = 1000,
-    lazy = false,
+    event = "VeryLazy",
     opts = {
       bigfile = { enabled = true },
       indent = { enabled = true },
@@ -109,6 +103,8 @@ return {
 
   {
     "williamboman/mason.nvim",
+    cmd = "Mason",
+    event = "BufReadPre",
     version = "*",
     lazy = true,
     config = function()
@@ -118,9 +114,27 @@ return {
   {
     "echasnovski/mini.pairs",
     version = "*",
-    event = "InsertEnter",
+    event = "VeryLazy",
     config = function()
       require("mini.pairs").setup()
+    end,
+  },
+  {
+    "echasnovski/mini.surround",
+    version = "*",
+    event = "VeryLazy",
+    config = function()
+      require("mini.surround").setup({
+        mappings = {
+          add = "Sa", -- Add surrounding in Normal and Visual modes
+          delete = "Sd", -- Delete surrounding
+          find = "Sf", -- Find surrounding (to the right)
+          find_left = "SF", -- Find surrounding (to the left)
+          highlight = "Sh", -- Highlight surrounding
+          replace = "Sr", -- Replace surrounding
+          update_n_lines = "Sn", -- Update `n_lines`
+        },
+      })
     end,
   },
   {
@@ -151,7 +165,7 @@ return {
       }
       local map = vim.keymap.set
       map("n", "<leader>ll", "<cmd>VimtexCompile<cr>")
-      map("n", "<leader>jj", "<cmd>VimtexView<cr>")
+      -- map("n", "<leader>jj", "<cmd>VimtexView<cr>")
     end,
   },
 }

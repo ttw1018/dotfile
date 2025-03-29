@@ -2,7 +2,6 @@ return {
   "saghen/blink.cmp",
   event = { "InsertEnter" },
   version = "*",
-  dependencies = { "rafamadriz/friendly-snippets" },
   opts = {
     keymap = {
       preset = "super-tab",
@@ -12,20 +11,32 @@ return {
       nerd_font_variant = "mono",
     },
     sources = {
-      default = { "lsp", "path", "snippets" },
+      default = function()
+        local ft = vim.bo.filetype
+        if ft == "tex" or ft == "markdown" then
+          return { "lsp", "path", "snippets" }
+        else
+          return { "lsp", "buffer", "path", "snippets" }
+        end
+      end,
     },
     completion = {
+      list = {
+        max_items = 30,
+      },
       accept = {
         auto_brackets = {
           enabled = false,
         },
       },
+      menu = {
+        draw = {
+          treesitter = { "lsp" },
+        },
+      },
     },
     fuzzy = {
       implementation = "rust",
-      prebuilt_binaries = {
-        force_version = "v0.13.1",
-      },
     },
   },
   opts_extend = { "sources.default" },
