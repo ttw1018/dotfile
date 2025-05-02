@@ -8,7 +8,7 @@ keybinds clear-defaults=true {
     bind "Ctrl a" { SwitchToMode "normal"; }
     bind "Ctrl h" {
       MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
-        name "move_focus_or_tab";
+        name "move_focus";
         payload "left";
 
         // Plugin Configuration
@@ -40,7 +40,7 @@ keybinds clear-defaults=true {
 
     bind "Ctrl l" {
       MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
-        name "move_focus_or_tab";
+        name "move_focus";
         payload "right";
 
         move_mod "ctrl";
@@ -51,9 +51,11 @@ keybinds clear-defaults=true {
 
   normal {
     bind "Ctrl a" { SwitchToMode "locked"; }
+    bind "esc" { SwitchToMode "locked"; }
     bind "s" { NewPane "down"; SwitchToMode "locked"; }
     bind "v" { NewPane "right"; SwitchToMode "locked"; }
     bind "z" { ToggleFocusFullscreen; SwitchToMode "locked"; }
+    bind "d" { Detach; }
 
     bind "p" { GoToPreviousTab; SwitchToMode "locked"; }
     bind "n" { GoToNextTab; SwitchToMode "locked"; }
@@ -345,7 +347,7 @@ load_plugins {
 // 
 // theme "tokyo-night-light"
 
-theme "everforest-light"
+// theme "everforest-light"
 
 // Choose the base input mode of zellij.
 // Default: normal
@@ -526,5 +528,4 @@ show_startup_tips false
 // Default: true
 // 
 show_release_notes false
-
 
