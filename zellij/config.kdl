@@ -52,14 +52,22 @@ keybinds clear-defaults=true {
   normal {
     bind "Ctrl a" { SwitchToMode "locked"; }
     bind "esc" { SwitchToMode "locked"; }
+
     bind "s" { NewPane "down"; SwitchToMode "locked"; }
     bind "v" { NewPane "right"; SwitchToMode "locked"; }
+
     bind "z" { ToggleFocusFullscreen; SwitchToMode "locked"; }
+    bind "f" { ToggleFloatingPanes; SwitchToMode "locked"; }
+
+
     bind "d" { Detach; }
 
     bind "p" { GoToPreviousTab; SwitchToMode "locked"; }
     bind "n" { GoToNextTab; SwitchToMode "locked"; }
-    bind "c" { NewTab; SwitchToMode "locked"; }
+
+    bind "c" { NewTab { name " "; }; SwitchToMode "locked"; }
+    bind "x" { CloseTab; SwitchToMode "locked"; }
+
     bind "1" { GoToTab 1; SwitchToMode "locked"; }
     bind "2" { GoToTab 2; SwitchToMode "locked"; }
     bind "3" { GoToTab 3; SwitchToMode "locked"; }
@@ -74,6 +82,8 @@ keybinds clear-defaults=true {
     bind "J" { Resize "Increase down"; }
     bind "K" { Resize "Increase up"; }
     bind "L" { Resize "Increase right"; }
+
+    bind "[" { EditScrollback; SwitchToMode "locked"; }
 
   }
 
@@ -345,7 +355,7 @@ load_plugins {
 // Choose the theme that is specified in the themes section.
 // Default: default
 // 
-// theme "tokyo-night-light"
+theme "tokyo-night-light"
 
 // theme "everforest-light"
 
@@ -448,7 +458,7 @@ pane_frames false
 
 // Path to the default editor to use to edit pane scrollbuffer
 // Default: $EDITOR or $VISUAL
-// scrollback_editor "/usr/bin/nvim"
+scrollback_editor "/usr/local/bin/nvim"
 
 // A fixed name to always give the Zellij session.
 // Consider also setting `attach_to_session true,`
